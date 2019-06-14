@@ -16,5 +16,8 @@
     "NaturalScience.showUserNumber|block": "OLED 显示屏 第%line行|显示数字%n",
     "NaturalScience.showUserText|block": "OLED 显示屏 第%line行|显示文本%text",
     "NaturalScience.clear|block": "OLED清屏",
-    "NaturalScience.TemperatureNumber|block": "水温(℃)"
+     "NaturalScience.TemperatureNumber|block": "水温(℃)",
+    "NaturalScience.rgb|block": "红%red|绿%green|蓝%blue",
+    "NaturalScience.setRGB|block": "RGB灯 亮度%brightness|颜色%rgb=RGB_color",
+    "NaturalScience.rgbColors|block": "%color"
 }

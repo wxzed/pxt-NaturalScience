@@ -1,47 +1,158 @@
-# Adafruit NeoPixel Library [![Build Status](https://travis-ci.org/adafruit/Adafruit_NeoPixel.svg?branch=master)](https://travis-ci.org/adafruit/Adafruit_NeoPixel)
+# SSD1306 OLED MakeCode Package [![Build Status](https://travis-ci.org/Tinkertanker/pxt-oled-ssd1306.svg?branch=master)](https://travis-ci.org/Tinkertanker/pxt-oled-ssd1306)
 
-Arduino library for controlling single-wire-based LED pixels and strip such as the [Adafruit 60 LED/meter Digital LED strip][strip], the [Adafruit FLORA RGB Smart Pixel][flora], the [Adafruit Breadboard-friendly RGB Smart Pixel][pixel], the [Adafruit NeoPixel Stick][stick], and the [Adafruit NeoPixel Shield][shield].
+This is the MakeCode Package for SSD1306 OLED controller, based on the Adafruit Arduino library available [here](https://github.com/adafruit/Adafruit_SSD1306).
 
-After downloading, rename folder to 'Adafruit_NeoPixel' and install in Arduino Libraries folder. Restart Arduino IDE, then open File->Sketchbook->Library->Adafruit_NeoPixel->strandtest sketch.
+## Hardware Setup
+1. Insert the OLED display into the I2C ports on the break out board.
 
-Compatibility notes: Port A is not supported on any AVR processors at this time
+## Blocks
+### Initialize OLED Display
+Initializes the OLED display.
 
-[flora]:  http://adafruit.com/products/1060
-[strip]:  http://adafruit.com/products/1138
-[pixel]:  http://adafruit.com/products/1312
-[stick]:  http://adafruit.com/products/1426
-[shield]: http://adafruit.com/products/1430
+Sets up the OLED display and prepares it for use by the micro:bit.
 
----
+```sig
+OLED.init(64, 128);
+```
 
-## Supported chipsets
+This block must be placed before any of the ``show`` blocks.
 
-We have included code for the following chips - *sometimes these break for exciting reasons that we can't control* in which case please open an issue!
+### Show String Without Newline
+Displays a string on the OLED module without a newline.
 
- * AVR ATmega and ATtiny (any 8-bit) - 8 MHz, 12 MHz and 16 MHz
- * Teensy 3.x and LC
- * Arduino Due
- * Arduino 101
- * ATSAMD21 (Arduino Zero/M0 and other SAMD21 boards) @ 48 MHz
- * ATSAMD51 @ 120 MHz
- * Adafruit STM32 Feather @ 120 MHz
- * ESP8266 any speed
- * ESP32 any speed
- * Nordic nRF52 (Adafruit Feather nRF52), nRF51 (micro:bit)
+```sig
+OLED.showString1("hello, micro:bit!")
+```
 
-Check forks for other architectures not listed here!
+The ``init`` block must be placed before this.
 
----
+### Show String With Newline
+Displays a string on the OLED module with a newline.
 
-### Roadmap
+```sig
+OLED.showString2("hello, micro:bit!")
+```
 
-The PRIME DIRECTIVE is to maintain backward compatibility with existing Arduino sketches -- many are hosted elsewhere and don't track changes here, some are in print and can never be changed!
+The ``init`` block must be placed before this.
 
-Please don't reformat code for the sake of reformatting code. The resulting large "visual diff" makes it impossible to untangle actual bug fixes from merely rearranged lines. (Exception for first item in wishlist below.)
 
-Things I'd Like To Do But There's No Official Timeline So Please Don't Count On Any Of This Ever Being Canonical:
+### Show Number Without newline
+Displays a number on the OLED module without a newline.
 
-  * For the show() function (with all the delicate pixel timing stuff), break out each architecture into separate source files rather than the current unmaintainable tangle of #ifdef statements!
-  * Please don't use updateLength() or updateType() in new code. They should not have been implemented this way (use the C++ 'new' operator with the regular constructor instead) and are only sticking around because of the Prime Directive. setPin() is OK for now though, it's a trick we can use to 'recycle' pixel memory across multiple strips.
-  * In the M0 and M4 code, use the hardware systick counter for bit timing rather than hand-tweaked NOPs (a temporary kludge at the time because I wasn't reading systick correctly). (As of 1.4.2, systick is used on M4 devices and it appears to be overclock-compatible. Not for M0 yet, which is why this item is still here.)
-  * As currently written, brightness scaling is still a "destructive" operation -- pixel values are altered in RAM and the original value as set can't be accurately read back, only approximated, which has been confusing and frustrating to users. It was done this way at the time because NeoPixel timing is strict, AVR microcontrollers (all we had at the time) are limited, and assembly language is hard. All the 32-bit architectures should have no problem handling nondestructive brightness scaling -- calculating each byte immediately before it's sent out the wire, maintaining the original set value in RAM -- the work just hasn't been done. There's a fair chance even the AVR code could manage it with some intense focus. (The DotStar library achieves nondestructive brightness scaling because it doesn't have to manage data timing so carefully...every architecture, even ATtiny, just takes whatever cycles it needs for the multiply/shift operations.)
+```sig
+OLED.showNumber1(123)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Show Number With Newline
+Displays a number on the OLED module with a newline.
+
+```sig
+OLED.showNumber2(123)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Clear Display
+Clears the display.
+
+```sig
+OLED.clear()
+```
+
+The ``init`` block must be placed before this.
+
+
+### Show Loading Screen
+Displays a pre-made loading screen.
+
+```sig
+OLED.Loading_Screen()
+```
+
+The ``init`` block must be placed before this.
+
+
+### Draw Outlined Rectangle
+Displays an outline of a rectangle.
+
+```sig
+OLED.drawRectangle(x,y,w,h)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Draw Filled Rectangle
+Displays a filled rectangle.
+
+```sig
+OLED.fillRectangle(x,y,w,h)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Draw Outlined Circle
+Displays an outline of a circle.
+
+```sig
+OLED.drawCircle(x,y,r)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Draw Filled Circle
+Displays a filled circle.
+
+```sig
+OLED.fillCircle(x,y,r)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Draw Line
+Displays a line.
+
+```sig
+OLED.drawLine(x1,y1,x2,y2)
+```
+
+The ``init`` block must be placed before this.
+
+
+### Progress bar
+Displays a progress bar with a specified percentage of progress.
+
+```sig
+OLED.showProgress()
+```
+
+The ``init`` block must be placed before this.
+
+
+## Example: Counter
+The following code is a simple counter that displays an increasing number every second.
+
+```blocks
+OLED.init(64, 128)
+let item = 0
+basic.forever(() => {
+    basic.pause(1000)
+    item += 1
+    OLED.showNumber(item)
+})
+```
+
+## Supported targets
+
+* for PXT/microbit
+(The metadata above is needed for package search.)
+```package
+NFC=github:ouki-wang/pxt-nautual-science
+```

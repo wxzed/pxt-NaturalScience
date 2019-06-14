@@ -5,7 +5,8 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "radio": "*",
+        "ws2812b": "github:microsoft/pxt-ws2812b#v0.0.4"
     },
     "files": [
         "README.md",
@@ -18,8 +19,7 @@
         "glcdfont.h",
         "NaturalScience.ts",
         "_locales/zh/NaturalScience-strings.json",
-        "ds18b20.cpp",
-        "neopixel.ts"
+        "ds18b20.cpp"
     ],
     "testFiles": [],
     "public": false,
