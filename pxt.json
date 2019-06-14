@@ -19,8 +19,7 @@
         "NaturalScience.ts",
         "_locales/zh/NaturalScience-strings.json",
         "ds18b20.cpp",
-        "Adafruit_NeoPixel.h",
-        "Adafruit_NeoPixel.cpp"
+        "neopixel.ts"
     ],
     "testFiles": [],
     "public": false,
