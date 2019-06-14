@@ -24,26 +24,6 @@ namespace NaturalScience {
     let TCS34725_RGBC_B = 0;
     let TCS34725_BEGIN = 0;
     let TCS34725_ENABLE_AIEN = 0X10;
-    enum TCS34275_ENABLE {
-        POWER_ON = 0x01,
-        POWER_OFF = 0x00,
-        RGBC_ENABLE = 0X01,
-        RGBC_DISABLE = 0X00
-    }
-    enum TCS34725IntegrationTime_t {
-        TCS34725_INTEGRATIONTIME_2_4MS = 0xFF,
-        TCS34725_INTEGRATIONTIME_24MS = 0xF6,
-        TCS34725_INTEGRATIONTIME_50MS = 0xEB,
-        TCS34725_INTEGRATIONTIME_101MS = 0xD5,
-        TCS34725_INTEGRATIONTIME_154MS = 0xC0,
-        TCS34725_INTEGRATIONTIME_700MS = 0x00
-    }
-    enum TCS34725Gain_t {
-        TCS34725_GAIN_1X = 0x00,
-        TCS34725_GAIN_4X = 0x01,
-        TCS34725_GAIN_16X = 0x02,
-        TCS34725_GAIN_60X = 0x03
-    }
 
 
     function getInt8LE(addr: number, reg: number): number {
@@ -53,10 +33,10 @@ namespace NaturalScience {
 
     function getUInt16LE(addr: number, reg: number): number {
         pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
-        return pins.i2cReadNumber(TCS34725_ADDRESS, NumberFormat.UInt16LE);
+        return pins.i2cReadNumber(addr, NumberFormat.UInt16LE);
     }
 
-    function getInt16LE(addr:number, reg: number): number {
+    function getInt16LE(addr: number, reg: number): number {
         pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(addr, NumberFormat.Int16LE);
     }
@@ -79,63 +59,62 @@ namespace NaturalScience {
 
     function getRGBC() {
         if (!TCS34725_BEGIN) tcs34725_begin();
-        /**
-         * TCS34725_RGBC_C = getUInt16LE(REG_CLEAR_CHANNEL_L);
-                TCS34725_RGBC_R = getUInt16LE(REG_RED_CHANNEL_L);
-                TCS34725_RGBC_G = getUInt16LE(REG_RED_CHANNEL_L);
-                TCS34725_RGBC_B = getUInt16LE(REG_BLUE_CHANNEL_L);
-                basic.pause(50);
-                tcs34725_lock();
-        
-         */
 
-        TCS34725_RGBC_C = getUInt16LE(TCS34725_ADDRESS, 0x14 | REG_TCS34725_COMMAND_BIT);
-        TCS34725_RGBC_R = getUInt16LE(TCS34725_ADDRESS, 0x16 | REG_TCS34725_COMMAND_BIT);
-        TCS34725_RGBC_G = getUInt16LE(TCS34725_ADDRESS, 0x18 | REG_TCS34725_COMMAND_BIT);
-        TCS34725_RGBC_B = getUInt16LE(TCS34725_ADDRESS, 0x1A | REG_TCS34725_COMMAND_BIT);
+        TCS34725_RGBC_C = getUInt16LE(TCS34725_ADDRESS, REG_CLEAR_CHANNEL_L | REG_TCS34725_COMMAND_BIT);
+        TCS34725_RGBC_R = getUInt16LE(TCS34725_ADDRESS, REG_RED_CHANNEL_L | REG_TCS34725_COMMAND_BIT);
+        TCS34725_RGBC_G = getUInt16LE(TCS34725_ADDRESS, REG_GREEN_CHANNEL_L | REG_TCS34725_COMMAND_BIT);
+        TCS34725_RGBC_B = getUInt16LE(TCS34725_ADDRESS, REG_BLUE_CHANNEL_L | REG_TCS34725_COMMAND_BIT);
 
         basic.pause(50);
-        let ret = readReg(TCS34725_ADDRESS, 0 | REG_TCS34725_COMMAND_BIT)
-        ret |= 0x10;
-        writeReg(TCS34725_ADDRESS, 0 | REG_TCS34725_COMMAND_BIT, ret)
+        let ret = readReg(TCS34725_ADDRESS, REG_TCS34725_ENABLE | REG_TCS34725_COMMAND_BIT)
+        ret |= TCS34725_ENABLE_AIEN;
+        writeReg(TCS34725_ADDRESS, REG_TCS34725_ENABLE | REG_TCS34725_COMMAND_BIT, ret)
     }
 
+    /**
+     * 获取TCS34725颜色传感器的红色分量
+     */
     //% block="Get red"
-    //% weight=80 
-    //% subcategory="Color & Light"
+    //% weight=60 
     export function getRed(): number {
         getRGBC();
         return TCS34725_RGBC_R;
     }
 
+    /**
+     * 获取TCS34725颜色传感器的绿色分量
+     */
     //% block="Get green"
-    //% weight=79 
-    //% subcategory="Color & Light"
+    //% weight=60 
     export function getGreen(): number {
         getRGBC();
         return TCS34725_RGBC_G;
     }
 
+    /**
+     * 获取TCS34725颜色传感器的蓝色分量
+     */
     //% block="Get blue"
-    //% weight=78 
-    //% subcategory="Color & Light"
+    //% weight=60 
     export function getBlue(): number {
         getRGBC();
         return TCS34725_RGBC_B;
     }
 
-    //% block="Get C"
-    //% weight=77 
-    //% subcategory="Color & Light"
+    /**
+     * 获取TCS34725颜色传感器的自然光线值
+     */
+    //% block="Get light"
+    //% weight=60 
     export function getC(): number {
         getRGBC();
         return TCS34725_RGBC_C;
     }
 
     /**
-     * STM32
+     * STM32  function
      */
-    
+
     let STM32_ADDRESS = 0X10;
     let STM32_PID = 0X01;
     let REG_STM32_VID = 0X02;
@@ -167,81 +146,76 @@ namespace NaturalScience {
         pins.i2cWriteBuffer(addr, buf)
     }
 
-
-    //% block="Get Reg_data"
-    //% weight=70
-    //% subcategory="STM32"
-    export function getData(): number {
-        let ret = readReg(STM32_ADDRESS, STM32_PID);
-        return ret;
-    }
-
     //% block="set Led %parms"
-    //% weight=71
-    //% subcategory="STM32"
+    //% weight=69
     export function setLed(parms: STM32_LED_STATUS) {
         writeReg(STM32_ADDRESS, REG_SEM32_LED_CONTROL, parms)
     }
 
-    //% block="get K"
-    //% weight=71
-    //% subcategory="STM32"
-    export function getK(): string {
-        let ret1 = readReg(STM32_ADDRESS, REG_STM32_K_INTEGER);
-        let ret2 = readReg(STM32_ADDRESS, REG_SEM32_K_DECIMAL);
-        let str = ".";
-        str = ret1 + str + ret2;
-        return str;
-    }
 
+
+    /**
+     * 获取紫外线传感器的UV值
+     */
     //% block="get UV"
-    //% weight=71
-    //% subcategory="STM32"
+    //% weight=70
     export function getUV(): number {
         let ret1 = readReg(STM32_ADDRESS, REG_STM32_UV_H);
         let ret2 = readReg(STM32_ADDRESS, REG_SEM32_UV_L);
         return (ret1 << 8) | ret2;
     }
 
+    /**
+     * 获取TDS传感器的K值
+     */
+    //% block="get TDS K Value"
+    //% weight=70
+    export function getK(): string {
+        let ret1 = readReg(STM32_ADDRESS, REG_STM32_K_INTEGER);
+        let ret2 = readReg(STM32_ADDRESS, REG_SEM32_K_DECIMAL);
+        let str = ".";
+        if (ret2 < 10) {
+            str = str + '0';
+        }
+        str = ret1 + str + ret2;
+        return str;
+    }
+
+    /**
+     * 设置TDS传感器的K值
+     */
+    //% block="set TDS K %value"
+    //% weight=70
+    export function setK(value: number) {
+
+        let ret1 = parseInt(value.toString());
+        writeReg(STM32_ADDRESS, REG_STM32_K_INTEGER, ret1);
+        let ret2 = (value * 100 - ret1 * 100);
+        writeReg(STM32_ADDRESS, REG_SEM32_K_DECIMAL, ret2);
+    }
+
+    /**
+     * 获取TDS传感器的TDS值
+     */
     //% block="get TDS"
-    //% weight=71
-    //% subcategory="STM32"
+    //% weight=70
     export function getTDS(): number {
-        let ret1 = readReg(STM32_ADDRESS, REG_SEM32_TDS_L);
+        let ret1 = readReg(STM32_ADDRESS, REG_STM32_TDS_H);
         let ret2 = readReg(STM32_ADDRESS, REG_SEM32_TDS_L);
         return (ret1 << 8) | ret2;
     }
 
+    /**
+     * 获取声音强度函数
+     */
     //% block="get noise"
-    //% weight=71
-    //% subcategory="STM32"
+    //% weight=70
     export function getNoise(): number {
         let ret1 = readReg(STM32_ADDRESS, REG_SEM32_NOISE_H);
         let ret2 = readReg(STM32_ADDRESS, REG_STM32_NOISE_L);
         return (ret1 << 8) | ret2;
     }
 
-    //% block="get zero"
-    //% weight=71
-    //% subcategory="STM32"
-    export function getNoise1(): string {
-        let ret1 = 0;
-        let ret2 = 0;
-        let str = "."
-        str = ret1 + str + ret2;
-        return str;
-    }
-    //% block="get float"
-    //% weight=71
-    //% subcategory="STM32"
-    export function getNoise2(): number {
-        let ret1 = 100;
-        let ret2 = 25;
-        let str = ".";
-        str = ret1 + str + ret2;
-        let ret = parseFloat(str);
-        return ret;
-    }
 
     /**
      * BME280
@@ -318,10 +292,12 @@ namespace NaturalScience {
         //% block="Humidity"
         Humidity
     }
-    
+
+    /**
+     * 获取BME280传感器的压强、温度、湿度值
+     */
     //% block="get %data"
     //% weight=80
-    //% subcategory="BMP280"
     export function readBME280Data(data: BME280Data): number {
         if (POWER_ON != 1) {
             powerOn()
@@ -336,15 +312,14 @@ namespace NaturalScience {
     }
 
     /**
-     * OLED
+     * OLED 12864显示屏
      */
     //% blockId=oled_show_text
-    //% weight=99
+    //% weight=90
     //% line.min=0 line.max=7
     //% text.defl="DFRobot"
     //% block="OLED show line %line|text %text"
     //% shim=OLED::showText
-    //% subcategory="OLED"
     export function showUserText(line: number, text: string): void {
         return;
     }
@@ -354,11 +329,10 @@ namespace NaturalScience {
      * @param n value , eg: 2019
      */
     //% blockId=oled_show_number
-    //% weight=98
+    //% weight=90
     //% line.min=0 line.max=7
     //% block="OLED show line %line|number %n"
     //% shim=OLED::showNumber
-    //% subcategory="OLED"
     export function showUserNumber(line: number, n: number): void {
         return;
     }
@@ -369,77 +343,28 @@ namespace NaturalScience {
     //% blockId=oled_clear_screen
     //% block="clear OLED display"
     //% icon="\uf1ec" 
+    //% weight=89
     //% shim=OLED::clearDisplay
-    //% subcategory="OLED"
     export function clear(): void {
         return;
     }
     /**
      * OLED
      */
-    export enum pin {
-       //% block=pin0
-       pin0 = 0,
-       //% block=pin1
-       pin1 = 1,
-       //% block=pin2
-       pin2 = 2,
-       //% block=pin5
-       pin5 = 5,
-       //% block=pin8
-       pin8 = 8,
-       //% block=pin11
-       pin11 = 11,
-       //% block=pin12
-       pin12 = 12,
-       //% block=pin13
-       pin13 = 13,
-       //% block=pin14
-       pin14 = 14,
-       //% block=pin15
-       pin15 = 15,
-       //% block=pin16
-       pin16 = 16
-     }
-     
     //% shim=DS18B20::Temperature
     export function Temperature(p: number): number {
         // Fake function for simulator
         return 0
     }
-    
-    //% weight=10 blockId="Temperature_number" 
-    //% block="|%p| Temperature_number "
-    //% p.fieldEditor="gridpicker" p.fieldOptions.columns=4
-    export function TemperatureNumber(p: pin): number {
+
+    /**
+     * 获取水的温度
+     */
+    //% weight=80 blockId="get DS18B20 Temp" 
+    //% block="get DS18B20 Temp "
+    export function TemperatureNumber(): number {
         // Fake function for simulator
-        return Temperature(p)/100
+        return Temperature(13) / 100
     }
-    
-    //% weight=10 blockId="Temperature_string" 
-    //% block="|%p| Temperature_string "
-    //% p.fieldEditor="gridpicker" p.fieldOptions.columns=4
-    export function TemperatureString(p: pin) : string{
-        let temp = Temperature(p);
-        let x = (temp / 100)
-        let y = (temp % 100)
-        let z = ''
-        if(temp >= 0){
-          if(y < 10){
-            z = x.toString() + '.0' + y.toString()
-          }
-          else{
-            z = x.toString() + '.' + y.toString()
-          }
-        }
-        else if(temp < 0){
-          if(y > -10){
-            z = '-' + (-x).toString() + '.0' + (-y).toString()
-          }
-          else{
-            z = '-' + (-x).toString() + '.' + (-y).toString()
-          }
-        }
-        return z
-    }
+
 }

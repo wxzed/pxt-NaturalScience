@@ -5,7 +5,7 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "radio":"*"
+        "radio": "*"
     },
     "files": [
         "README.md",
@@ -23,5 +23,6 @@
         "Adafruit_NeoPixel.cpp"
     ],
     "testFiles": [],
-    "public": false
+    "public": false,
+    "installedVersion": "workspace:789df45a-19af-42c5-95bf-52cd330ecd08"
 }
