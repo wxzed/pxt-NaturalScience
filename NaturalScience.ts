@@ -78,7 +78,7 @@ namespace NaturalScience {
     //% weight=60 
     export function getRed(): number {
         getRGBC();
-        return TCS34725_RGBC_R;
+        return (Math.round(TCS34725_RGBC_R) / Math.round(TCS34725_RGBC_C)) * 255;
     }
 
     /**
@@ -88,7 +88,7 @@ namespace NaturalScience {
     //% weight=60 
     export function getGreen(): number {
         getRGBC();
-        return TCS34725_RGBC_G;
+        return (Math.round(TCS34725_RGBC_G) / Math.round(TCS34725_RGBC_C))*255;
     }
 
     /**
@@ -98,7 +98,7 @@ namespace NaturalScience {
     //% weight=60 
     export function getBlue(): number {
         getRGBC();
-        return TCS34725_RGBC_B;
+        return (Math.round(TCS34725_RGBC_B) / Math.round(TCS34725_RGBC_C))*255;
     }
 
     /**
@@ -108,7 +108,7 @@ namespace NaturalScience {
     //% weight=60 
     export function getC(): number {
         getRGBC();
-        return TCS34725_RGBC_C;
+        return Math.round(TCS34725_RGBC_C);
     }
 
     /**
@@ -254,7 +254,7 @@ namespace NaturalScience {
         let var1 = (((adc_T >> 3) - (dig_T1 << 1)) * dig_T2) >> 11
         let var2 = (((((adc_T >> 4) - dig_T1) * ((adc_T >> 4) - dig_T1)) >> 12) * dig_T3) >> 14
         let t = var1 + var2
-        T = ((t * 5 + 128) >> 8) / 100
+        T = ((t * 5 + 128) >> 8);
         var1 = (t >> 1) - 64000
         var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * dig_P6
         var2 = var2 + ((var1 * dig_P5) << 1)
@@ -276,7 +276,7 @@ namespace NaturalScience {
         var2 = var1 - (((((var1 >> 15) * (var1 >> 15)) >> 7) * dig_H1) >> 4)
         if (var2 < 0) var2 = 0
         if (var2 > 419430400) var2 = 419430400
-        H = (var2 >> 12) / 1024
+        H = (var2 >> 12);
     }
 
     function powerOn() {
@@ -298,16 +298,26 @@ namespace NaturalScience {
      */
     //% block="get %data"
     //% weight=80
-    export function readBME280Data(data: BME280Data): number {
+    export function readBME280Data(data: BME280Data): string {
         if (POWER_ON != 1) {
             powerOn()
         }
         get();
+        let s = ".";
         switch (data) {
-            case 0: return P;
-            case 1: return T;
-            case 2: return H;
-            default: return 0;
+            case 0: let ret1 = P / 1000;
+                let ret2 = P % 1000;
+                s = parseInt(ret1.toString()) + s + parseInt(ret2.toString());
+                return s;
+            case 1: let t1 = (T + 0) / 100 + 0;
+                let t2 = (T + 0) % 100;
+                s = parseInt(t1.toString()) + s + parseInt(t2.toString());
+                return s;
+            case 2: let h1 = H / 1024;
+                let h2 = H % 1024;
+                s = parseInt(h1.toString()) + s + parseInt(h2.toString());
+                return s;
+            default: return "0";
         }
     }
 
@@ -360,14 +370,52 @@ namespace NaturalScience {
     /**
      * 获取水的温度
      */
-    //% weight=80 blockId="get DS18B20 Temp" 
-    //% block="get DS18B20 Temp "
+    //% weight=80 blockId="get temp" 
+    //% block="get tempN"
     export function TemperatureNumber(): number {
         // Fake function for simulator
-        return Temperature(13) / 100
+        let temp = Temperature(13);
+        while (temp > 12500) {
+            temp = Temperature(13);
+            basic.pause(1);
+        }
+        return temp / 100;
     }
-    
-    
+
+    /**
+     * 获取水的温度
+     */
+    //% weight=81 blockId="Temperature_string" 
+    //% block="get tempS"
+    export function TemperatureString(): string {
+        let temp = Temperature(13);
+        while (temp > 12500) {
+            temp = Temperature(13);
+            basic.pause(1);
+        }
+        let x = (temp / 100)
+        let y = (temp % 100)
+        let z = ''
+        if (temp >= 0) {
+            if (y < 10) {
+                z = x.toString() + '.0' + y.toString()
+            }
+            else {
+                z = x.toString() + '.' + y.toString()
+            }
+        }
+        else if (temp < 0) {
+            if (y > -10) {
+                z = '-' + (-x).toString() + '.0' + (-y).toString()
+            }
+            else {
+                z = '-' + (-x).toString() + '.' + (-y).toString()
+            }
+        }
+        return z
+    }
+
+
     export enum RGBColors {
         //% block=red
         Red = 0xFF0000,
@@ -396,6 +444,7 @@ namespace NaturalScience {
      */
     //% blockId="setRGB" block="set RGB %brightness|color %rgb=RGB_color" blockGap=8
     //% weight=79
+    //% brightness.min=0 brightness.max=255 brightness.defl=50
     export function setRGB(brightness: number, rgb: number): void {
         // let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
         let stride = 3;
@@ -444,6 +493,8 @@ namespace NaturalScience {
     //% weight=1
     //% blockId="rgb_led" block="red %red|green %green|blue %blue"
     //% advanced=true
+    //% red.min=0 red.max=255 green.min=0 green.max=255 blue.min=0 blue.max=255
+    //% red.defl=255 green.defl=0 blue.defl=0;
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
