@@ -1,158 +1,43 @@
-# SSD1306 OLED MakeCode Package [![Build Status](https://travis-ci.org/Tinkertanker/pxt-oled-ssd1306.svg?branch=master)](https://travis-ci.org/Tinkertanker/pxt-oled-ssd1306)
+# MBT0013 micronatural & science 
 
-This is the MakeCode Package for SSD1306 OLED controller, based on the Adafruit Arduino library available [here](https://github.com/adafruit/Adafruit_SSD1306).
+Micronatural&science  - IOT Natural and Scientific Expansion Board
+![image](http://wiki.dfrobot.com.cn/images/7/71/OBLOQ%E5%BC%95%E8%84%9A%E8%AF%B4%E6%98%8E%E5%9B%BE.jpg)
+---------------------------------------------------------
 
-## Hardware Setup
-1. Insert the OLED display into the I2C ports on the break out board.
+## Table of Contents
+
+* [URL](#url)
+* [Summary](#summary)
+* [Blocks](#blocks)
+* [Example](#example)
+* [License](#license)
+
+## URL
+project URL: ```https://github.com/Arya11111/pxt-NaturalScience```
+
+## Summary
+This is a microbit-based theme expansion board. The theme is natural science. Through the vivid logo and interesting theme features, the expansion board becomes a knowledgeable and interesting multimedia teaching tool. In the teaching process, it is very easy to transition from the natural environment knowledge point to the knowledge detection, program programming and other knowledge points.
+Expansion board configuration: atmospheric pressure, temperature, humidity, color, sound, light, water quality, OLED screen as data display, using makecode graphical programming.
 
 ## Blocks
-### Initialize OLED Display
-Initializes the OLED display.
 
-Sets up the OLED display and prepares it for use by the micro:bit.
-
-```sig
-OLED.init(64, 128);
-```
-
-This block must be placed before any of the ``show`` blocks.
-
-### Show String Without Newline
-Displays a string on the OLED module without a newline.
-
-```sig
-OLED.showString1("hello, micro:bit!")
-```
-
-The ``init`` block must be placed before this.
-
-### Show String With Newline
-Displays a string on the OLED module with a newline.
-
-```sig
-OLED.showString2("hello, micro:bit!")
-```
-
-The ``init`` block must be placed before this.
+### block
+![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
+![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
+![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
 
 
-### Show Number Without newline
-Displays a number on the OLED module without a newline.
+## Example
 
-```sig
-OLED.showNumber1(123)
-```
+### test
+![image](https://github.com/DFRobot/obloq-weather/blob/master/image/test.png)
 
-The ``init`` block must be placed before this.
+get code: ```https://github.com/DFRobot/obloq-weather/blob/master/test.ts```
 
+Get the iot of things platform: [East IoT](http://iot.dfrobot.com.cn/).
 
-### Show Number With Newline
-Displays a number on the OLED module with a newline.
+## License
 
-```sig
-OLED.showNumber2(123)
-```
-
-The ``init`` block must be placed before this.
+MIT
 
 
-### Clear Display
-Clears the display.
-
-```sig
-OLED.clear()
-```
-
-The ``init`` block must be placed before this.
-
-
-### Show Loading Screen
-Displays a pre-made loading screen.
-
-```sig
-OLED.Loading_Screen()
-```
-
-The ``init`` block must be placed before this.
-
-
-### Draw Outlined Rectangle
-Displays an outline of a rectangle.
-
-```sig
-OLED.drawRectangle(x,y,w,h)
-```
-
-The ``init`` block must be placed before this.
-
-
-### Draw Filled Rectangle
-Displays a filled rectangle.
-
-```sig
-OLED.fillRectangle(x,y,w,h)
-```
-
-The ``init`` block must be placed before this.
-
-
-### Draw Outlined Circle
-Displays an outline of a circle.
-
-```sig
-OLED.drawCircle(x,y,r)
-```
-
-The ``init`` block must be placed before this.
-
-
-### Draw Filled Circle
-Displays a filled circle.
-
-```sig
-OLED.fillCircle(x,y,r)
-```
-
-The ``init`` block must be placed before this.
-
-
-### Draw Line
-Displays a line.
-
-```sig
-OLED.drawLine(x1,y1,x2,y2)
-```
-
-The ``init`` block must be placed before this.
-
-
-### Progress bar
-Displays a progress bar with a specified percentage of progress.
-
-```sig
-OLED.showProgress()
-```
-
-The ``init`` block must be placed before this.
-
-
-## Example: Counter
-The following code is a simple counter that displays an increasing number every second.
-
-```blocks
-OLED.init(64, 128)
-let item = 0
-basic.forever(() => {
-    basic.pause(1000)
-    item += 1
-    OLED.showNumber(item)
-})
-```
-
-## Supported targets
-
-* for PXT/microbit
-(The metadata above is needed for package search.)
-```package
-NFC=github:ouki-wang/pxt-nautual-science
-```
