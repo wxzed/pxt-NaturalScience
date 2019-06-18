@@ -22,17 +22,26 @@ Expansion board configuration: atmospheric pressure, temperature, humidity, colo
 ## Blocks
 
 ### block
-![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
-![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
-![image](https://github.com/DFRobot/obloq-weather/blob/master/image/block.png)
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/image/MBT0013_block1.png)
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/image/MBT0013_block2.png)
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/image/MBT0013_block3.png)
 
 
 ## Example
 
 ### test
-![image](https://github.com/DFRobot/obloq-weather/blob/master/image/test.png)
+TDS Detection
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/TDS.png)
+Temperature, Humidity, Atmospheric Pressure
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/BME280.png)
+Water temperature,UV,Sound,Light
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/params.png)
+RGB LED
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/TCS.png)
+Set LED
+![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/LED.png)
 
-get code: ```https://github.com/DFRobot/obloq-weather/blob/master/test.ts```
+get code: ```https://github.com/Arya11111/pxt-NaturalScience/blob/master/test.ts```
 
 Get the iot of things platform: [East IoT](http://iot.dfrobot.com.cn/).
 

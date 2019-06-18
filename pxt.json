@@ -19,7 +19,8 @@
         "glcdfont.h",
         "NaturalScience.ts",
         "_locales/zh/NaturalScience-strings.json",
-        "ds18b20.cpp"
+        "ds18b20.cpp",
+        "test.ts"
     ],
     "testFiles": [],
     "public": false,

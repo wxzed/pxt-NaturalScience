@@ -8,7 +8,7 @@
     "NaturalScience.setK|block": "设置TDS电极常数K %value",
     "NaturalScience.getUV|block": "紫外线强度（mW/cm2）",
     "NaturalScience.getTDS|block": "TDS（PPM）",
-    "NaturalScience.getNoise|block": "声音强度（DB）",
+    "NaturalScience.getNoise|block": "声音强度",
     "NaturalScience.BME280Data.Pressure|block": "大气压强(Kpa)",
     "NaturalScience.BME280Data.Temperature|block": "环境温度(℃)",
     "NaturalScience.BME280Data.Humidity|block": "环境湿度(RH)",
@@ -17,7 +17,6 @@
     "NaturalScience.showUserText|block": "OLED 显示屏 第%line行|显示文本%text",
     "NaturalScience.clear|block": "OLED清屏",
     "NaturalScience.TemperatureNumber|block": "水温(℃)",
-    "NaturalScience.TemperatureString|block": "水温S（℃）",
     "NaturalScience.rgb|block": "红%red|绿%green|蓝%blue",
     "NaturalScience.setRGB|block": "RGB灯 亮度%brightness|颜色%rgb=RGB_color",
     "NaturalScience.rgbColors|block": "%color"

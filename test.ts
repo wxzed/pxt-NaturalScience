@@ -51,3 +51,14 @@ basic.forever(function () {
     basic.pause(1000)
     NaturalScience.clear()
 })
+
+/**
+ * demo5: Set the LED light switch
+ */
+basic.forever(function () {
+    NaturalScience.setLed(NaturalScience.STM32_LED_STATUS.ON)
+    basic.pause(1000)
+    NaturalScience.setLed(NaturalScience.STM32_LED_STATUS.OFF)
+    basic.pause(1000)
+})
+
