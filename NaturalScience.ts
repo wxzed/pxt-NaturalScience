@@ -156,7 +156,7 @@ namespace NaturalScience {
      * Obtain the UV intensity of the UV sensor (mW/cm2)
      */
     //% block="get UV"
-    //% weight=70
+    //% weight=69
     export function getUV(): number {
         let ret1 = readReg(STM32_ADDRESS, REG_STM32_UV_H);
         let ret2 = readReg(STM32_ADDRESS, REG_SEM32_UV_L);
@@ -481,4 +481,3 @@ namespace NaturalScience {
     }
 
 }
-
