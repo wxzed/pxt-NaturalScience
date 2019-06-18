@@ -29,15 +29,15 @@ Expansion board configuration: atmospheric pressure, temperature, humidity, colo
 
 ## Example
 
-### demo1:TDS Detection
+### TDS Detection
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/TDS.png)
-### demo2:Temperature, Humidity, Atmospheric Pressure
+### Temperature, Humidity, Atmospheric Pressure
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/BME280.png)
-### demo3:Water temperature,UV,Sound,Light
+### Water temperature,UV,Sound,Light
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/params.png)
-### demo4:RGB LED
+### RGB LED
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/TCS.png)
-### demo5:Set LED
+### Set LED
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/LED.png)
 
 get code: ```https://github.com/Arya11111/pxt-NaturalScience/blob/master/test.ts```
