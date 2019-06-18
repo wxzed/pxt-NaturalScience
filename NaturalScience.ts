@@ -1,9 +1,7 @@
-// Add your code here
-
 //% color="#AA278D" height=100 icon="\uf062" block="NaturalScience"
 namespace NaturalScience {
     /**
-    * TCS34725:颜色识别传感器相关寄存器变量定义
+    * TCS34725: Color recognition sensor related register variable definition
     */
     let TCS34725_ADDRESS = 0x29;
     let REG_TCS34725_ID = 0x12;
@@ -72,7 +70,7 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取TCS34725颜色传感器的红色分量
+     * Get the red component of the TCS34725 color sensor
      */
     //% block="Get red"
     //% weight=60 
@@ -82,27 +80,27 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取TCS34725颜色传感器的绿色分量
+     * Get the green component of the TCS34725 color sensor
      */
     //% block="Get green"
     //% weight=60 
     export function getGreen(): number {
         getRGBC();
-        return (Math.round(TCS34725_RGBC_G) / Math.round(TCS34725_RGBC_C))*255;
+        return (Math.round(TCS34725_RGBC_G) / Math.round(TCS34725_RGBC_C)) * 255;
     }
 
     /**
-     * 获取TCS34725颜色传感器的蓝色分量
+     * Get the blue component of the TCS34725 color sensor
      */
     //% block="Get blue"
     //% weight=60 
     export function getBlue(): number {
         getRGBC();
-        return (Math.round(TCS34725_RGBC_B) / Math.round(TCS34725_RGBC_C))*255;
+        return (Math.round(TCS34725_RGBC_B) / Math.round(TCS34725_RGBC_C)) * 255;
     }
 
     /**
-     * 获取TCS34725颜色传感器的自然光线值
+     *  Get the natural light value of the TCS34725 color sensor
      */
     //% block="Get light"
     //% weight=60 
@@ -155,18 +153,18 @@ namespace NaturalScience {
 
 
     /**
-     * 获取紫外线传感器的UV值
+     * Obtain the UV intensity of the UV sensor (mW/cm2)
      */
     //% block="get UV"
     //% weight=70
     export function getUV(): number {
         let ret1 = readReg(STM32_ADDRESS, REG_STM32_UV_H);
         let ret2 = readReg(STM32_ADDRESS, REG_SEM32_UV_L);
-        return (ret1 << 8) | ret2;
+        return ((ret1 << 8) | ret2) / 100;
     }
 
     /**
-     * 获取TDS传感器的K值
+     * Get the K value of the TDS sensor
      */
     //% block="get TDS K Value"
     //% weight=70
@@ -182,10 +180,10 @@ namespace NaturalScience {
     }
 
     /**
-     * 设置TDS传感器的K值
+     * Set the K value of the TDS sensor
      */
     //% block="set TDS K %value"
-    //% weight=70
+    //% weight=70 value.defl=2.68
     export function setK(value: number) {
 
         let ret1 = parseInt(value.toString());
@@ -195,7 +193,7 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取TDS传感器的TDS值
+     * Get the TDS value of the TDS sensor
      */
     //% block="get TDS"
     //% weight=70
@@ -206,19 +204,19 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取声音强度函数
+     * Get sound intensity
      */
     //% block="get noise"
     //% weight=70
     export function getNoise(): number {
         let ret1 = readReg(STM32_ADDRESS, REG_SEM32_NOISE_H);
         let ret2 = readReg(STM32_ADDRESS, REG_STM32_NOISE_L);
-        return (ret1 << 8) | ret2;
+        return (((ret1 << 8) | ret2) / 4096) * 1024;
     }
 
 
     /**
-     * BME280
+     * BME280 Sensor
      */
     let BME280_I2C_ADDR = 0x76;
 
@@ -294,7 +292,7 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取BME280传感器的压强、温度、湿度值
+     *  Get the pressure, temperature, and humidity of the BME280 sensor
      */
     //% block="get %data"
     //% weight=80
@@ -322,7 +320,7 @@ namespace NaturalScience {
     }
 
     /**
-     * OLED 12864显示屏
+     * OLED 12864 display string
      */
     //% blockId=oled_show_text
     //% weight=90
@@ -334,7 +332,7 @@ namespace NaturalScience {
         return;
     }
     /**
-     * initialises the i2c OLED display
+     * OLED 12864 shows the number
      * @param line line num (8 pixels per line), eg: 0
      * @param n value , eg: 2019
      */
@@ -368,7 +366,7 @@ namespace NaturalScience {
     }
 
     /**
-     * 获取水的温度
+     * Get the temperature of the water
      */
     //% weight=80 blockId="get temp" 
     //% block="get tempN"
@@ -381,40 +379,6 @@ namespace NaturalScience {
         }
         return temp / 100;
     }
-
-    /**
-     * 获取水的温度
-     */
-    //% weight=81 blockId="Temperature_string" 
-    //% block="get tempS"
-    export function TemperatureString(): string {
-        let temp = Temperature(13);
-        while (temp > 12500) {
-            temp = Temperature(13);
-            basic.pause(1);
-        }
-        let x = (temp / 100)
-        let y = (temp % 100)
-        let z = ''
-        if (temp >= 0) {
-            if (y < 10) {
-                z = x.toString() + '.0' + y.toString()
-            }
-            else {
-                z = x.toString() + '.' + y.toString()
-            }
-        }
-        else if (temp < 0) {
-            if (y > -10) {
-                z = '-' + (-x).toString() + '.0' + (-y).toString()
-            }
-            else {
-                z = '-' + (-x).toString() + '.' + (-y).toString()
-            }
-        }
-        return z
-    }
-
 
     export enum RGBColors {
         //% block=red
@@ -440,10 +404,10 @@ namespace NaturalScience {
     }
 
     /** 
-     * Send all the changes to the strip.
+     * Set the color of the RGB light
      */
     //% blockId="setRGB" block="set RGB %brightness|color %rgb=RGB_color" blockGap=8
-    //% weight=79
+    //% weight=1
     //% brightness.min=0 brightness.max=255 brightness.defl=50
     export function setRGB(brightness: number, rgb: number): void {
         // let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
