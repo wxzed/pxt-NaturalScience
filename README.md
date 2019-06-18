@@ -22,23 +22,22 @@ Expansion board configuration: atmospheric pressure, temperature, humidity, colo
 ## Blocks
 
 ### block
-![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/MBT0013_block1.png)
+![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/MBT0013_blok1.png)
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/MBT0013_block2.png)
-![image](https://github.com/Arya11111/pxt-NaturalScience/tree/master/image/MBT0013_block3.png)
+![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/MBT0013_block3.png)
 
 
 ## Example
 
-### test
-TDS Detection
+### demo1:TDS Detection
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/TDS.png)
-Temperature, Humidity, Atmospheric Pressure
+### demo2:Temperature, Humidity, Atmospheric Pressure
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/BME280.png)
-Water temperature,UV,Sound,Light
+### demo3:Water temperature,UV,Sound,Light
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/params.png)
-RGB LED
+### demo4:RGB LED
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/TCS.png)
-Set LED
+### demo5:Set LED
 ![image](https://github.com/Arya11111/pxt-NaturalScience/blob/master/image/LED.png)
 
 get code: ```https://github.com/Arya11111/pxt-NaturalScience/blob/master/test.ts```
