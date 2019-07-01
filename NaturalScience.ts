@@ -113,7 +113,7 @@ namespace NaturalScience {
      * STM32  function
      */
 
-    let STM32_ADDRESS = 0X10;
+    let STM32_ADDRESS = 0X1F;
     let STM32_PID = 0X01;
     let REG_STM32_VID = 0X02;
     let REG_SEM32_LED_CONTROL = 0X03;
